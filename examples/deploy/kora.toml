@@ -29,16 +29,20 @@ account_ttl = 60
 
 [validation]
 price_source = "Mock"
-max_allowed_lamports = 5000000
+# CreateQuestionWithCondition pays ~12M lamports rent; 5M was too low
+max_allowed_lamports = 25000000
 max_signatures = 10
 allow_durable_transactions = false
 allowed_programs = [
     "11111111111111111111111111111111",              # System Program
-    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",   # Token Program
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",   # SPL Token Program
+    "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",   # Token-2022 (PrepareCondition / InitializeMint2)
     "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",  # Associated Token Program
     "AddressLookupTab1e1111111111111111111111111",   # Address Lookup Table Program
     "ComputeBudget111111111111111111111111111111",  # Compute Budget Program
     "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr",  # Memo Program
+    "AWsTbGTWENQ1R1exr27w3VGK8kixZUkWQFHz7YDrSR3j",  # CreateQuestionWithCondition
+    "8GLWjmLpEt6e1tTXTp91rfwmMxcmeuVGFvHs5NExWYWh",  # PrepareCondition (CPI)
 ]
 # Mints users may interact with in sponsored transactions (not used for Kora fees when price.type = free)
 allowed_tokens = [
@@ -88,9 +92,10 @@ allow_approve = false
 allow_revoke = false
 allow_set_authority = false
 allow_mint_to = false
-allow_initialize_mint = false
+allow_initialize_mint = true
 allow_initialize_account = true
 allow_initialize_multisig = false
+allow_initialize_extension_authority = true
 allow_freeze_account = false
 allow_thaw_account = false
 
@@ -119,9 +124,9 @@ type = "free"
 
 [validation.token_2022]
 transfer_hook_policy = "deny_mutable_for_delayed_signing"
+# Product mints use TransferHook (see PrepareCondition CPI); do not block transfer_hook here
 blocked_mint_extensions = [
     "permanent_delegate",
-    "transfer_hook",
 ]
 blocked_account_extensions = [
     # "confidential_transfer_account", # Confidential transfer state for the account
