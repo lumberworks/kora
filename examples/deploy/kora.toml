@@ -46,6 +46,7 @@ allowed_programs = [
     "9a4nagUj5jozsmesGCuQrcYVsJqRapRcbSB86BW5nJ4T", # CreateQuestionWithCondition
     "7boT4uqXGRMbDPzA7Q9znqbfYNB6auoXUcDnUfxyZAU",  # Conditional Tokens Program
     "FCvCbWoLpzNYKzQnXYXCo1yz9DTpgUs11QqHVqnqtWhA",
+    "A6N1F8MRsdgcojAx8p6FaECvw8mo8w6qJcWsbKQBANK4",
 
 ]
 # Mints users may interact with in sponsored transactions (not used for Kora fees when price.type = free)
