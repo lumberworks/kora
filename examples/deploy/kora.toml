@@ -42,12 +42,12 @@ allowed_programs = [
     "ComputeBudget111111111111111111111111111111",  # Compute Budget Program
     "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr",  # Memo Program
     "Ed25519SigVerify111111111111111111111111111",   # CLOB match_* (Ed25519 precompile ix)
-  # pm-svm devnet (client programIds)
-    "2JLNk2zYf5g2f6xQiAwpnDbG5aDmfqEate2CNBac4bCr",  # oracle
-    "7boT4uqXGRMbDPzA7Q9znqbfYNB6auoXUcDnUfxyZAU",  # conditionalTokens
-    "9a4nagUj5jozsmesGCuQrcYVsJqRapRcbSB86BW5nJ4T",  # questionMarket
-    "5DnFGrt8BGjybNA3EMFKwV1Yvw9iVzJXC7zqP94R7iEV",  # hook
-    "DXLsLX8W2ALPMWMoMRiorxyboA5tND6394aW7Nj81CqT",  # clobExchange
+  # pm-svm devnet (Anchor.toml / client programIds)
+    "FzLnnbKtQCTKviEbrDYMLZYXNDHQdjSSa4Ybj4jAbrUL",  # oracle
+    "71WqN6GVtKoWZU4hZy4pU8k5T2vn5ZyKtxa1Kaa7DuEA",  # conditionalTokens
+    "9DuJL8koSRyanoHX7gaYRsMdrcsrxaSTkXy3JoFyAcMv",  # questionMarket
+    "CyCNcQjPNamsPgJmkt7KsHs4vBoDR5khidUL1hshdNgT",  # hook
+    "FtkBF1Vc4ABcPpefNrdk4n99Ng8Vt9Te5gAYvRZPo722",  # clobExchange
 ]
 # Mints users may interact with in sponsored transactions (not used for Kora fees when price.type = free)
 allowed_tokens = [
