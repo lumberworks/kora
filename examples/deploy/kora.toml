@@ -37,17 +37,17 @@ allowed_programs = [
     "11111111111111111111111111111111",              # System Program
     "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",   # SPL Token Program
     "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",   # Token-2022
-    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",  # Associated Token Program
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",  # Asntsociated Token Program
     "AddressLookupTab1e1111111111111111111111111",   # Address Lookup Table Program
     "ComputeBudget111111111111111111111111111111",  # Compute Budget Program
     "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr",  # Memo Program
     "Ed25519SigVerify111111111111111111111111111",   # CLOB match_* (Ed25519 precompile ix)
-  # pm-svm devnet (Anchor.toml / client programIds)
+  # pm-svm devnet (declare_id! in lib.rs — live deploy; Anchor.toml IDs are stale shells)
     "FzLnnbKtQCTKviEbrDYMLZYXNDHQdjSSa4Ybj4jAbrUL",  # oracle
-    "71WqN6GVtKoWZU4hZy4pU8k5T2vn5ZyKtxa1Kaa7DuEA",  # conditionalTokens
-    "9DuJL8koSRyanoHX7gaYRsMdrcsrxaSTkXy3JoFyAcMv",  # questionMarket
-    "CyCNcQjPNamsPgJmkt7KsHs4vBoDR5khidUL1hshdNgT",  # hook
-    "FtkBF1Vc4ABcPpefNrdk4n99Ng8Vt9Te5gAYvRZPo722",  # clobExchange
+    "A6N1F8MRsdgcojAx8p6FaECvw8mo8w6qJcWsbKQBANK4",  # conditionalTokens
+    "FCvCbWoLpzNYKzQnXYXCo1yz9DTpgUs11QqHVqnqtWhA",  # questionMarket
+    "F7y5MfW8d5kqR25QHDhUQ9LrKCiZUZVF6Pdnw15q5zZW",  # hook
+    "Cs4GY1yZVxjxhhyUum3AupMuS3bo4yKRXifgLTTAh1sf",  # clobExchange
 ]
 # Mints users may interact with in sponsored transactions (not used for Kora fees when price.type = free)
 allowed_tokens = [
