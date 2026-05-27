@@ -29,8 +29,8 @@ account_ttl = 60
 
 [validation]
 price_source = "Mock"
-# CreateQuestionWithCondition pays ~12M lamports rent; 5M was too low
-max_allowed_lamports = 25000000
+# Max SOL outflow from fee payer per tx (rent + transfers). Presale+metadata ~25.3M observed.
+max_allowed_lamports = 1000000000
 max_signatures = 10
 allow_durable_transactions = false
 allowed_programs = [
