@@ -62,12 +62,12 @@ allowed_tokens = [
 allowed_spl_paid_tokens = []
 disallowed_accounts = []
 
-# Free pricing: keep fee payer policy strict so users cannot drain the sponsor wallet.
-# Only enable create_account / initialize_account to pay ATA rent when needed.
+# Free pricing: limit what the sponsor wallet can do per instruction type.
+# Presale txs use fee payer as source for System Transfer (SOL) + create_account rent.
 [validation.fee_payer_policy]
 
 [validation.fee_payer_policy.system]
-allow_transfer = false
+allow_transfer = true
 allow_assign = false
 allow_create_account = true
 allow_allocate = false
