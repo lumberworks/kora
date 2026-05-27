@@ -41,6 +41,7 @@ allowed_programs = [
     "AddressLookupTab1e1111111111111111111111111",   # Address Lookup Table Program
     "ComputeBudget111111111111111111111111111111",  # Compute Budget Program
     "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr",  # Memo Program
+    "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s",  # Metaplex Token Metadata
     "Ed25519SigVerify111111111111111111111111111",   # CLOB match_* (Ed25519 precompile ix)
   # pm-svm devnet (declare_id! in lib.rs — live deploy; Anchor.toml IDs are stale shells)
     "FzLnnbKtQCTKviEbrDYMLZYXNDHQdjSSa4Ybj4jAbrUL",  # oracle
