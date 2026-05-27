@@ -48,6 +48,8 @@ allowed_programs = [
     "FCvCbWoLpzNYKzQnXYXCo1yz9DTpgUs11QqHVqnqtWhA",  # questionMarket
     "F7y5MfW8d5kqR25QHDhUQ9LrKCiZUZVF6Pdnw15q5zZW",  # hook
     "Cs4GY1yZVxjxhhyUum3AupMuS3bo4yKRXifgLTTAh1sf",  # clobExchange
+    "DuYyXguB5PVSKg6E2p4XPrrXZSCJnuBhoGpkGCBN5bBb",  # feeManagement
+    "2Rnw1VoEtsUMQ7wkvYZjDehqSqRob6uNkeymDfvKrquB",  # presale
 ]
 # Mints users may interact with in sponsored transactions (not used for Kora fees when price.type = free)
 allowed_tokens = [
