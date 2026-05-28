@@ -2942,9 +2942,18 @@ impl IxUtils {
                     &instruction.data,
                 )
                 .map_err(|e| {
+                    let len = instruction.data.len();
+                    let b0 = instruction.data.first().copied();
+                    let head = instruction
+                        .data
+                        .iter()
+                        .take(8)
+                        .map(|b| format!("{b:02x}"))
+                        .collect::<Vec<_>>()
+                        .join(" ");
                     KoraError::InvalidTransaction(format!(
-                        "Failed to parse Token-2022 instruction: {}",
-                        sanitize_error!(e)
+                        "Failed to parse Token-2022 instruction (len={len}, first_byte={b0:?}, head_hex='{head}'): {}",
+                        sanitize_error!(e),
                     ))
                 })?;
                 match spl_ix {
