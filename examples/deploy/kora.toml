@@ -80,7 +80,7 @@ allow_withdraw = false
 
 [validation.fee_payer_policy.spl_token]
 allow_transfer = false
-allow_burn = false
+allow_burn = true
 allow_close_account = false
 allow_approve = false
 allow_revoke = false
