@@ -498,6 +498,9 @@ pub const PARSED_DATA_FIELD_FREEZE_ACCOUNT: &str = "freezeAccount";
 pub const PARSED_DATA_FIELD_THAW_ACCOUNT: &str = "thawAccount";
 pub const PARSED_DATA_FIELD_GET_ACCOUNT_DATA_SIZE: &str = "getAccountDataSize";
 pub const PARSED_DATA_FIELD_INITIALIZE_IMMUTABLE_OWNER: &str = "initializeImmutableOwner";
+pub const PARSED_DATA_FIELD_INITIALIZE_TRANSFER_HOOK: &str = "initializeTransferHook";
+pub const PARSED_DATA_FIELD_UPDATE_TRANSFER_HOOK: &str = "updateTransferHook";
+pub const PARSED_DATA_FIELD_PROGRAM_ID: &str = "programId";
 pub const PARSED_DATA_FIELD_SYNC_NATIVE: &str = "syncNative";
 pub const PARSED_DATA_FIELD_EXTENSION_TYPES: &str = "extensionTypes";
 
@@ -536,6 +539,30 @@ impl IxUtils {
                 field_name, e
             ))
         })
+    }
+
+    fn get_optional_field_as_pubkey(
+        info: &serde_json::Value,
+        field_name: &str,
+    ) -> Result<Option<Pubkey>, KoraError> {
+        match info.get(field_name) {
+            None | Some(serde_json::Value::Null) => Ok(None),
+            Some(_) => Self::get_field_as_pubkey(info, field_name).map(Some),
+        }
+    }
+
+    fn compiled_instruction_from_solana_instruction(
+        instruction: &Instruction,
+        account_keys_hashmap: &HashMap<Pubkey, u8>,
+    ) -> Result<CompiledInstruction, KoraError> {
+        let program_id_index =
+            Self::get_account_index(account_keys_hashmap, &instruction.program_id)?;
+        let accounts = instruction
+            .accounts
+            .iter()
+            .map(|meta| Self::get_account_index(account_keys_hashmap, &meta.pubkey))
+            .collect::<Result<Vec<u8>, KoraError>>()?;
+        Ok(CompiledInstruction { program_id_index, accounts, data: instruction.data.clone() })
     }
 
     /// Helper method to extract a field as u64 from JSON string with proper error handling
@@ -1847,6 +1874,70 @@ impl IxUtils {
                     accounts: vec![account_idx],
                     data,
                 })
+            }
+            PARSED_DATA_FIELD_INITIALIZE_TRANSFER_HOOK => {
+                if is_spl_token_program {
+                    return Err(KoraError::InvalidTransaction(
+                        "initializeTransferHook is only supported for Token-2022".to_string(),
+                    ));
+                }
+
+                let mint = Self::get_field_as_pubkey(info, PARSED_DATA_FIELD_MINT)?;
+                let authority =
+                    Self::get_optional_field_as_pubkey(info, PARSED_DATA_FIELD_AUTHORITY)?;
+                let hook_program_id =
+                    Self::get_optional_field_as_pubkey(info, PARSED_DATA_FIELD_PROGRAM_ID)?;
+
+                let sol_ix =
+                    spl_token_2022_interface::extension::transfer_hook::instruction::initialize(
+                        &spl_token_2022_interface::id(),
+                        &mint,
+                        authority,
+                        hook_program_id,
+                    )
+                    .map_err(|e| {
+                        KoraError::SerializationError(format!(
+                            "Failed to build initializeTransferHook instruction: {}",
+                            sanitize_error!(e)
+                        ))
+                    })?;
+
+                Self::compiled_instruction_from_solana_instruction(
+                    &sol_ix,
+                    account_keys_hashmap,
+                )
+            }
+            PARSED_DATA_FIELD_UPDATE_TRANSFER_HOOK => {
+                if is_spl_token_program {
+                    return Err(KoraError::InvalidTransaction(
+                        "updateTransferHook is only supported for Token-2022".to_string(),
+                    ));
+                }
+
+                let mint = Self::get_field_as_pubkey(info, PARSED_DATA_FIELD_MINT)?;
+                let authority = Self::get_field_as_pubkey(info, PARSED_DATA_FIELD_AUTHORITY)?;
+                let hook_program_id =
+                    Self::get_optional_field_as_pubkey(info, PARSED_DATA_FIELD_PROGRAM_ID)?;
+
+                let sol_ix =
+                    spl_token_2022_interface::extension::transfer_hook::instruction::update(
+                        &spl_token_2022_interface::id(),
+                        &mint,
+                        &authority,
+                        &[],
+                        hook_program_id,
+                    )
+                    .map_err(|e| {
+                        KoraError::SerializationError(format!(
+                            "Failed to build updateTransferHook instruction: {}",
+                            sanitize_error!(e)
+                        ))
+                    })?;
+
+                Self::compiled_instruction_from_solana_instruction(
+                    &sol_ix,
+                    account_keys_hashmap,
+                )
             }
             _ => {
                 Err(KoraError::InvalidTransaction(format!(
@@ -3757,6 +3848,35 @@ mod tests {
         Ok(parsed)
     }
 
+    fn create_parsed_spl_token_initialize_transfer_hook(
+        mint: &Pubkey,
+        authority: Option<Pubkey>,
+        hook_program_id: Option<Pubkey>,
+    ) -> Result<solana_transaction_status_client_types::ParsedInstruction, Box<dyn std::error::Error>>
+    {
+        let solana_instruction =
+            spl_token_2022_interface::extension::transfer_hook::instruction::initialize(
+                &spl_token_2022_interface::id(),
+                mint,
+                authority,
+                hook_program_id,
+            )?;
+
+        let message = Message::new(&[solana_instruction], None);
+        let compiled_instruction = &message.instructions[0];
+
+        let account_keys_for_parsing = AccountKeys::new(&message.account_keys, None);
+
+        let parsed = parse_instruction::parse(
+            &spl_token_2022_interface::id(),
+            compiled_instruction,
+            &account_keys_for_parsing,
+            None,
+        )?;
+
+        Ok(parsed)
+    }
+
     fn create_parsed_spl_token_sync_native(
         account: &Pubkey,
     ) -> Result<solana_transaction_status_client_types::ParsedInstruction, Box<dyn std::error::Error>>
@@ -5514,6 +5634,46 @@ mod tests {
         );
 
         assert!(result.is_ok(), "syncNative CPI should reconstruct: {:?}", result.err());
+        let compiled = result.unwrap();
+        assert_eq!(compiled.program_id_index, 0);
+        assert_eq!(compiled.accounts, vec![1]);
+        assert_eq!(compiled.data, instruction.data);
+    }
+
+    #[test]
+    fn test_reconstruct_spl_token_initialize_transfer_hook_instruction() {
+        let mint = Pubkey::new_unique();
+        let authority = Pubkey::new_unique();
+        let hook_program_id = Pubkey::new_unique();
+        let token_program_id = spl_token_2022_interface::id();
+        let account_keys = vec![token_program_id, mint];
+
+        let instruction =
+            spl_token_2022_interface::extension::transfer_hook::instruction::initialize(
+                &token_program_id,
+                &mint,
+                Some(authority),
+                Some(hook_program_id),
+            )
+            .expect("Failed to create initializeTransferHook instruction");
+
+        let solana_parsed = create_parsed_spl_token_initialize_transfer_hook(
+            &mint,
+            Some(authority),
+            Some(hook_program_id),
+        )
+        .expect("Failed to create parsed instruction");
+
+        let result = IxUtils::reconstruct_spl_token_instruction(
+            &solana_parsed,
+            &IxUtils::build_account_keys_hashmap(&account_keys),
+        );
+
+        assert!(
+            result.is_ok(),
+            "initializeTransferHook CPI should reconstruct: {:?}",
+            result.err()
+        );
         let compiled = result.unwrap();
         assert_eq!(compiled.program_id_index, 0);
         assert_eq!(compiled.accounts, vec![1]);

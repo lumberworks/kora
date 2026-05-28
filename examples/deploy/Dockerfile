@@ -1,7 +1,9 @@
-# kora-cli 2.2.0-beta.7 needs Rust >= 1.91.1 (AWS SDK deps) + CPI burn inner-ix fix.
+# kora-cli from git: crates.io 2.2.0-beta.7 lacks CPI parsed-type support for
+# initializeTransferHook / updateTransferHook (Token-2022 transfer hooks).
 FROM rust:1.91.1-bookworm
 
-RUN cargo install kora-cli --version 2.2.0-beta.7
+ARG KORA_GIT_REV=main
+RUN cargo install --git https://github.com/lumberworks/kora.git --rev ${KORA_GIT_REV} --locked kora-cli
 
 WORKDIR /app
 COPY kora.toml signers.toml ./
