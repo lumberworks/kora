@@ -1,7 +1,7 @@
-# kora-cli on crates.io (v2.0.5) needs Rust >= 1.89 (Solana SDK deps)
+# kora-cli needs Rust >= 1.89 (Solana SDK deps). 2.2.0-beta.7+ fixes CPI burn inner-ix parsing.
 FROM rust:1.89-bookworm
 
-RUN cargo install kora-cli --version 2.0.5
+RUN cargo install kora-cli --version 2.2.0-beta.7
 
 WORKDIR /app
 COPY kora.toml signers.toml ./
