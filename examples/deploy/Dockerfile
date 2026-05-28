@@ -1,5 +1,5 @@
-# kora-cli needs Rust >= 1.89 (Solana SDK deps). 2.2.0-beta.7+ fixes CPI burn inner-ix parsing.
-FROM rust:1.89-bookworm
+# kora-cli 2.2.0-beta.7 needs Rust >= 1.91.1 (AWS SDK deps) + CPI burn inner-ix fix.
+FROM rust:1.91.1-bookworm
 
 RUN cargo install kora-cli --version 2.2.0-beta.7
 
