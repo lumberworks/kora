@@ -2,8 +2,10 @@
 # initializeTransferHook / updateTransferHook (Token-2022 transfer hooks).
 FROM rust:1.91.1-bookworm
 
-ARG KORA_GIT_REV=main
-RUN cargo install --git https://github.com/lumberworks/kora.git --rev ${KORA_GIT_REV} --locked kora-cli
+# Use --branch for branch names (libgit2 can fail to resolve --rev main).
+# You can still pin a SHA by setting KORA_GIT_REF to the commit hash.
+ARG KORA_GIT_REF=main
+RUN cargo install --git https://github.com/lumberworks/kora.git --branch ${KORA_GIT_REF} --locked kora-cli
 
 WORKDIR /app
 COPY kora.toml signers.toml ./
