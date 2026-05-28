@@ -1700,17 +1700,46 @@ impl IxUtils {
             }
             PARSED_DATA_FIELD_INITIALIZE_MINT | PARSED_DATA_FIELD_INITIALIZE_MINT2 => {
                 let mint = Self::get_field_as_pubkey(info, PARSED_DATA_FIELD_MINT)?;
-                // mint_authority is in instruction data, not used for reconstruction
-                let _mint_authority =
+                let mint_authority =
                     Self::get_field_as_pubkey(info, PARSED_DATA_FIELD_MINT_AUTHORITY)?;
+                let freeze_authority =
+                    Self::get_optional_field_as_pubkey(info, PARSED_DATA_FIELD_FREEZE_AUTHORITY)?;
+                let decimals = Self::get_field_as_u64(info, PARSED_DATA_FIELD_DECIMALS)? as u8;
 
                 let mint_idx = Self::get_account_index(account_keys_hashmap, &mint)?;
 
-                // InitializeMint has discriminator only, authority is in data
-                let data = if instruction_type == PARSED_DATA_FIELD_INITIALIZE_MINT {
-                    vec![0] // InitializeMint discriminator
+                let data = if is_spl_token_program {
+                    if instruction_type == PARSED_DATA_FIELD_INITIALIZE_MINT {
+                        spl_token_interface::instruction::TokenInstruction::InitializeMint {
+                            decimals,
+                            mint_authority,
+                            freeze_authority: freeze_authority.into(),
+                        }
+                        .pack()
+                    } else {
+                        spl_token_interface::instruction::TokenInstruction::InitializeMint2 {
+                            decimals,
+                            mint_authority,
+                            freeze_authority: freeze_authority.into(),
+                        }
+                        .pack()
+                    }
                 } else {
-                    vec![20] // InitializeMint2 discriminator
+                    if instruction_type == PARSED_DATA_FIELD_INITIALIZE_MINT {
+                        spl_token_2022_interface::instruction::TokenInstruction::InitializeMint {
+                            decimals,
+                            mint_authority,
+                            freeze_authority: freeze_authority.into(),
+                        }
+                        .pack()
+                    } else {
+                        spl_token_2022_interface::instruction::TokenInstruction::InitializeMint2 {
+                            decimals,
+                            mint_authority,
+                            freeze_authority: freeze_authority.into(),
+                        }
+                        .pack()
+                    }
                 };
 
                 Ok(CompiledInstruction { program_id_index, accounts: vec![mint_idx], data })
