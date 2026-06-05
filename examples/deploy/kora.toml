@@ -52,6 +52,7 @@ allowed_programs = [
     "DuYyXguB5PVSKg6E2p4XPrrXZSCJnuBhoGpkGCBN5bBb",  # feeManagement
     "2Rnw1VoEtsUMQ7wkvYZjDehqSqRob6uNkeymDfvKrquB",  # presale
     "ADWF4J3nCJ2kWnCtycuem2jhu7amUqJWQG3oa5xF67QJ",  # approve presale CPI (devnet)
+    "4NdD5962SfGqofmeyjfifJpdGnwTAiKaUKB5Z42UDc9T",  # approve presale CPI (devnet)
 ]
 # Mints users may interact with in sponsored transactions (not used for Kora fees when price.type = free)
 allowed_tokens = [
