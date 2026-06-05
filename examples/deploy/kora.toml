@@ -108,8 +108,8 @@ allow_freeze_account = false
 allow_thaw_account = false
 
 [validation.fee_payer_policy.alt]
-allow_create = false
-allow_extend = false
+allow_create = true
+allow_extend = true
 allow_freeze = false
 allow_deactivate = false
 allow_close = false
