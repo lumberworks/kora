@@ -43,6 +43,17 @@ allowed_programs = [
     "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr",  # Memo Program
     "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s",  # Metaplex Token Metadata
     "Ed25519SigVerify111111111111111111111111111",   # CLOB match_* (Ed25519 precompile ix)
+  # pm-svm mainnet
+    "3f4vBEgXo9y4Ndrn8KWnNpLLtt4VAGkmKWqXpGS1BLDB",  # conditionalTokens
+    "43ubx86ZnGJ4bzD8uZY91uoUzJdK2jULwSSVk8zHjzEY",  # clobExchange
+    "6aYGVgSPNgFxNB9f25UvKrzMs91cGh7urNZKdtnMUm6k",  # questionMarket
+    "JE3iUvfv2DjhHnEqf2cFtzMtqn1AYQ5s32e1fzkL6KTo",  # oracle
+    "HZ5ec3NbwceUfyzZkwGEzDxQHpr4p4L9JV1gmcPDyXYw",  # feeManagement
+    "4o7VyLGV79AynuTjTxDvsUfZKS11bX5SkSsk5zHKVovG",  # marketOracle
+    "H9GzTEu5giM1k9HJm126Pp6C6b3iKWahbF7RJj8Jr3zJ",  # presale
+    "J4n4QQMn7oHradT7uRqFQtbx74uJa9XPWGEPjUPx9HPh",  # referral
+    "3E2b2H3ZDMXjqQ1VKDz8zsVXWdRaH5Mjdd7qFB13Uejn",  # adminContract
+    "BeJcKe8Mx9TjQ7LWuNUPoY4yLQgQLsvsofo7jESTGaS9",  # dispute
   # pm-svm devnet (declare_id! in lib.rs — live deploy; Anchor.toml IDs are stale shells)
     "FzLnnbKtQCTKviEbrDYMLZYXNDHQdjSSa4Ybj4jAbrUL",  # oracle
     "A6N1F8MRsdgcojAx8p6FaECvw8mo8w6qJcWsbKQBANK4",  # conditionalTokens
