@@ -43,6 +43,17 @@ allowed_programs = [
     "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr",  # Memo Program
     "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s",  # Metaplex Token Metadata
     "Ed25519SigVerify111111111111111111111111111",   # CLOB match_* (Ed25519 precompile ix)
+  # pm-svm mainnet (redeploy)
+    "xpn3htSptTZECudoRA8WJmAEtiijxDseTqtawYysVNT",  # conditionalTokens
+    "AFT8SM1Vv8g8AQTf81LoE5oLteUTyhWzWTLj7SKZjkY1",  # clobExchange
+    "FkpHo3zb5h2nNS5n6tWAvDwXPTXR2qqVLjDmEkMayott",  # questionMarket
+    "8uNiLDZnarxyFyoCi1bE1qkBMsLs2Tpyohtdzdvjkg8j",  # oracle
+    "8S6hxqbDc8kgHf4uUzq2t15PeY36QSCYEpBVvM4Fhrkm",  # feeManagement
+    "Agt6beCbghi4jV9A8v9geRP5dnt2wDkJBVgy9oM33zit",  # marketOracle
+    "CKd94vPibAMAr8R5eLv21r8PYXkgLRithipBe8GV7J6C",  # presale
+    "9kyNMtUEFR6hDeZHUTbRKH3t1EJisfSvWQKKUev7ujoC",  # referral
+    "2HsyCdr59W5ndeboaE9JAmhEQ46m5Gm2ZWBfYEs1tC1i",  # adminContract
+    "8gqHPY1WtGFGmYNbrGrPVoct1kqPL6cCaUtJ17EHSsFp",  # dispute
   # pm-svm mainnet
     "3f4vBEgXo9y4Ndrn8KWnNpLLtt4VAGkmKWqXpGS1BLDB",  # conditionalTokens
     "43ubx86ZnGJ4bzD8uZY91uoUzJdK2jULwSSVk8zHjzEY",  # clobExchange
