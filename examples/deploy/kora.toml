@@ -1,3 +1,5 @@
+# Mainnet deploy config — track on git branch `main`.
+# Devnet config lives on branch `dev`.
 [kora]
 rate_limit = 100
 # Optional: Payment address to receive payment tokens (defaults to signer address)
@@ -37,28 +39,27 @@ allowed_programs = [
     "11111111111111111111111111111111",              # System Program
     "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",   # SPL Token Program
     "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",   # Token-2022
-    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",  # Asntsociated Token Program
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",  # Associated Token Program
     "AddressLookupTab1e1111111111111111111111111",   # Address Lookup Table Program
     "ComputeBudget111111111111111111111111111111",  # Compute Budget Program
     "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr",  # Memo Program
     "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s",  # Metaplex Token Metadata
-    "Ed25519SigVerify111111111111111111111111111",   # CLOB match_* (Ed25519 precompile ix)
-  # pm-svm devnet (declare_id! in lib.rs — live deploy; Anchor.toml IDs are stale shells)
-    "FzLnnbKtQCTKviEbrDYMLZYXNDHQdjSSa4Ybj4jAbrUL",  # oracle
-    "A6N1F8MRsdgcojAx8p6FaECvw8mo8w6qJcWsbKQBANK4",  # conditionalTokens
-    "FCvCbWoLpzNYKzQnXYXCo1yz9DTpgUs11QqHVqnqtWhA",  # questionMarket
-    "F7y5MfW8d5kqR25QHDhUQ9LrKCiZUZVF6Pdnw15q5zZW",  # hook
-    "Cs4GY1yZVxjxhhyUum3AupMuS3bo4yKRXifgLTTAh1sf",  # clobExchange
-    "DuYyXguB5PVSKg6E2p4XPrrXZSCJnuBhoGpkGCBN5bBb",  # feeManagement
-    "2Rnw1VoEtsUMQ7wkvYZjDehqSqRob6uNkeymDfvKrquB",  # presale
-    "ADWF4J3nCJ2kWnCtycuem2jhu7amUqJWQG3oa5xF67QJ",  # approve presale CPI (devnet)
-    "4NdD5962SfGqofmeyjfifJpdGnwTAiKaUKB5Z42UDc9T",  # approve presale CPI (devnet)
+    "Ed25519SigVerify111111111111111111111111111",   # Ed25519 precompile
+    # pm-svm v2 mainnet (declare_id! in lib.rs)
+    "8uNiLDZnarxyFyoCi1bE1qkBMsLs2Tpyohtdzdvjkg8j",  # oracle_v2
+    "xpn3htSptTZECudoRA8WJmAEtiijxDseTqtawYysVNT",   # conditional_tokens_v2
+    "FkpHo3zb5h2nNS5n6tWAvDwXPTXR2qqVLjDmEkMayott",  # question_market_v2
+    "8S6hxqbDc8kgHf4uUzq2t15PeY36QSCYEpBVvM4Fhrkm",  # fee_management_v2
+    "AFT8SM1Vv8g8AQTf81LoE5oLteUTyhWzWTLj7SKZjkY1",  # clob_exchange_v2
+    "Agt6beCbghi4jV9A8v9geRP5dnt2wDkJBVgy9oM33zit",  # market_oracle_v2
+    "CKd94vPibAMAr8R5eLv21r8PYXkgLRithipBe8GV7J6C",  # presale_v2
+    "2HsyCdr59W5ndeboaE9JAmhEQ46m5Gm2ZWBfYEs1tC1i",  # admin_contract_v2
+    "9kyNMtUEFR6hDeZHUTbRKH3t1EJisfSvWQKKUev7ujoC",  # referral_v2
+    "8gqHPY1WtGFGmYNbrGrPVoct1kqPL6cCaUtJ17EHSsFp",  # dispute_v2
 ]
 # Mints users may interact with in sponsored transactions (not used for Kora fees when price.type = free)
 allowed_tokens = [
     "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", # mainnet USDC
-    "So11111111111111111111111111111111111111112",  # wSOL
-    "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU", # devnet USDC
 ]
 # Empty when pricing is free — users pay no SPL token fee to Kora
 allowed_spl_paid_tokens = []
