@@ -32,7 +32,7 @@ account_ttl = 60
 [validation]
 price_source = "Mock"
 # Max SOL outflow from fee payer per tx (rent + transfers). Presale+metadata ~25.3M observed.
-max_allowed_lamports = 50000000
+max_allowed_lamports = 100000000
 max_signatures = 10
 allow_durable_transactions = false
 allowed_programs = [
@@ -70,7 +70,7 @@ disallowed_accounts = []
 [validation.fee_payer_policy]
 
 [validation.fee_payer_policy.system]
-allow_transfer = false
+allow_transfer = true
 allow_assign = false
 allow_create_account = true
 allow_allocate = false
@@ -134,7 +134,7 @@ get_version = true
 type = "free"
 
 [validation.token_2022]
-transfer_hook_policy = "deny_all"
+transfer_hook_policy = "deny_mutable_for_delayed_signing"
 # Product mints use TransferHook (see PrepareCondition CPI); do not block transfer_hook here
 blocked_mint_extensions = [
     "permanent_delegate",
